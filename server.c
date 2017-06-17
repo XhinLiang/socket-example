@@ -64,12 +64,12 @@ int main(int argc, char **argv)
         {
             continue;
         }
-        printf("client attach.\n");
+        printf("client attached.\n");
         while (1)
         {
             n = recv(connfd, buff, MAXLINE, 0);
             if (n == 0) {
-                printf("client detach.\n");
+                printf("client detached.\n");
                 close(connfd);
                 break;
             }
