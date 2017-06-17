@@ -58,17 +58,24 @@ int main(int argc, char **argv)
             printf("accept socket error: %s(errno: %d)", strerror(errno), errno);
             continue;
         }
-        // 下面的操作交给子进程去处理
-        pid = fork();
+        // 下面的操作交给子进程去处理     
         // 主进程继续处理下一个请求
-        if (!pid)
+        if (!fork())
         {
             continue;
         }
-        n = recv(connfd, buff, MAXLINE, 0);
-        buff[n] = '\0';
-        printf("recv msg from client: %s\n", buff);
-        close(connfd);
+        printf("client attach.\n");
+        while (1)
+        {
+            n = recv(connfd, buff, MAXLINE, 0);
+            if (n == 0) {
+                printf("client detach.\n");
+                close(connfd);
+                break;
+            }
+            buff[n] = '\0';
+            printf("recv msg from client: %s\n", buff);
+        }
     }
 
     close(listenfd);
