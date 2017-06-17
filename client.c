@@ -54,11 +54,6 @@ int main(int argc, char **argv)
             printf("bye~\n");
             break;
         }
-        // fgets(sendline, 4096, stdin);
-        // if (sendline[0] == EOF)
-        // {
-
-        // }
         if (send(sockfd, sendline, strlen(sendline), 0) < 0)
         {
             printf("send msg error: %s(errno: %d)\n", strerror(errno), errno);
